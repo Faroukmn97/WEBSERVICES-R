@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/librarys/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="js/librarys/papaparse.min.js" type="text/javascript"></script>
+    <title>Document</title>
+</head>
+<body>
+  
+    <div class="inputrutacsv"> <input type="file" onchange="" id="upload-csv" accept=".csv" id="rutacsvid" name="nombreinputcsv"></div>
+    <br><br>
+
+    <div class="principal">
+        <div class="tbl_csv" id="parsed_csv_list"></div>
+        <div class="imggra">
+            ss
+        </div>
+    </div>
+ 
+ <script type="text/javascript">
+   /*      $(document).ready(function () { */
+        const idimg = $("#idimg").val();
+        var b64csvTrain="";
+        var namecsvTrain="";
+        var csvtext="";
+
+        function clickfilecsvTrain()
+        {
+            document.getElementById("upload-csv-train").click();
+        }
+
+        function llamar(){
+            let url = "http://127.0.0.1:4039/datosFaltantes?req="+csvtext; 
+            console.log(url);
+            fetch(url)
+            .then(function (resp){
+               return resp.json();
+            })
+            .then(function(data){
+              alert(JSON.stringify(data));
+                console.log(JSON.stringify(data));
+            });
+        }
+
+            function onFileSelectedtrain(files) {
+            var archivo = files;
+            var reader = new FileReader();
+            if (archivo.length > 0) {
+                reader.readAsDataURL(archivo[0]);
+                reader.onloadend = function () {
+                    let B6 = reader.result;
+                    b64csvTrain = B6;
+                    namecsvTrain = archivo[0].name;
+                    /* listacsvB64.push(B6); */
+                    }
+            }
+        }
+
+        $(document).ready(function () {
+            $('#upload-csv').on("change", function (e) {
+                
+                onFileSelectedtrain(document.getElementById("upload-csv").files);
+                /*   e.preventDefault(); */
+                $('#upload-csv').parse({
+                    config: {
+                        delimiter: "auto",
+                        complete: displayHTMLTabletrain,
+                    },
+                    before: function (file, inputElem)
+                    {
+                        //console.log("Parsing file...", file);
+                    },
+                    error: function (err, file)
+                    {
+                        //console.log("ERROR:", err, file);
+                    },
+                    complete: function ()
+                    {
+                        //console.log("Done with all files");
+                    }
+                });
+         });
+
+    function displayHTMLTabletrain(results) {
+        var table = "<table class='tbl_csv'>";
+        var data = results.data;
+        console.log(results.data);
+        for (i = 0; i < data.length; i++) {
+            table += "<tr'>";
+            var row = data[i];
+            var cells = row.join(",").split(",");
+            for (j = 0; j < cells.length; j++) {
+                table += "<td>";
+                table += cells[j];
+                table += "</th>";
+            }
+            table += "</tr>";
+        }
+        table += "</table>";
+        $("#parsed_csv_list").html(table);
+    }
+
+    function onFileSelectedtrain(files) {
+    var archivo = files;
+    var reader = new FileReader();
+    if (archivo.length > 0) {
+        reader.readAsDataURL(archivo[0]);
+        reader.onloadend = function () {
+            let B6 = reader.result;
+            b64csvTrain = B6;
+            namecsvTrain = archivo[0].name;
+            /* listacsvB64.push(B6); */
+        }
+    }
+}
+});
+   /*  }); */
+ </script>
+</body>
+</html>

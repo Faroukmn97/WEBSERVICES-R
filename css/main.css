@@ -1,0 +1,34 @@
+.inputrutacsv{
+    margin: 3rem 0 0 5rem;
+}
+
+.principal{
+    display: flex;
+    margin-left: 1rem;
+    flex-direction: row;
+    margin-left: 5rem;
+}
+.imggra{
+    width: 30%;
+    height: 500px;
+    margin-right: 1rem;
+    background: #F0A26E;
+}
+.tbl_csv{
+    
+    width: 40%;
+    height: 40%;
+    overflow:scroll;
+  
+    margin-right: 7rem;
+    
+    
+ }
+ .tbl_csv td{ 
+     background: #F0A26E;
+     padding: 10px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+ }
+
+
